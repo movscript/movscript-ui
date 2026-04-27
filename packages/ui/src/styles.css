@@ -31,13 +31,20 @@
   opacity: 0.56;
 }
 
+.ms-button--xs {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: var(--ms-radius-sm);
+  font-size: 12px;
+}
+
 .ms-button--sm {
-  height: 32px;
-  padding: 0 12px;
+  height: 30px;
+  padding: 0 11px;
   font-size: 13px;
 }
 
-.ms-button--md {
+.ms-button--default {
   height: 38px;
   padding: 0 16px;
   font-size: 14px;
@@ -55,22 +62,45 @@
   padding: 0;
 }
 
+.ms-button--icon-xs {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: var(--ms-radius-sm);
+}
+
+.ms-button--icon-sm {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.ms-button--icon-lg {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+.ms-button--default,
 .ms-button--primary {
   background: var(--ms-color-primary);
   color: var(--ms-color-primary-foreground);
 }
 
+.ms-button--default:hover:not(:disabled),
 .ms-button--primary:hover:not(:disabled) {
   box-shadow: var(--ms-shadow-sm);
 }
 
-.ms-button--secondary {
+.ms-button--secondary,
+.ms-button--outline {
   border-color: var(--ms-color-border);
   background: var(--ms-color-surface);
   color: var(--ms-color-foreground);
 }
 
-.ms-button--secondary:hover:not(:disabled) {
+.ms-button--secondary:hover:not(:disabled),
+.ms-button--outline:hover:not(:disabled) {
   background: var(--ms-color-muted);
 }
 
@@ -83,9 +113,20 @@
   background: var(--ms-color-muted);
 }
 
+.ms-button--destructive,
 .ms-button--danger {
   background: var(--ms-color-danger);
   color: var(--ms-color-danger-foreground);
+}
+
+.ms-button--link {
+  height: auto;
+  border-color: transparent;
+  background: transparent;
+  color: var(--ms-color-primary);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .ms-button__content {
@@ -103,10 +144,10 @@
   animation: ms-spin 700ms linear infinite;
 }
 
-.ms-input {
+.ms-input,
+.ms-textarea {
   width: 100%;
   min-width: 0;
-  height: 38px;
   border: 1px solid var(--ms-color-border);
   border-radius: var(--ms-radius-md);
   background: var(--ms-color-surface);
@@ -120,17 +161,30 @@
     box-shadow var(--ms-duration-fast) var(--ms-easing-standard);
 }
 
-.ms-input::placeholder {
+.ms-input {
+  height: 38px;
+}
+
+.ms-textarea {
+  min-height: 64px;
+  resize: vertical;
+}
+
+.ms-input::placeholder,
+.ms-textarea::placeholder {
   color: var(--ms-color-muted-foreground);
 }
 
-.ms-input:disabled {
+.ms-input:disabled,
+.ms-textarea:disabled {
   cursor: not-allowed;
   opacity: 0.56;
 }
 
 .ms-input[data-invalid="true"],
-.ms-input[aria-invalid="true"] {
+.ms-input[aria-invalid="true"],
+.ms-textarea[data-invalid="true"],
+.ms-textarea[aria-invalid="true"] {
   border-color: var(--ms-color-danger);
 }
 
@@ -163,7 +217,9 @@
   white-space: nowrap;
 }
 
-.ms-badge--neutral {
+.ms-badge--default,
+.ms-badge--neutral,
+.ms-badge--secondary {
   border-color: var(--ms-color-border);
   background: var(--ms-color-muted);
   color: var(--ms-color-muted-foreground);
@@ -184,17 +240,37 @@
   color: var(--ms-color-warning);
 }
 
-.ms-badge--danger {
+.ms-badge--danger,
+.ms-badge--destructive {
   background: color-mix(in srgb, var(--ms-color-danger) 14%, transparent);
   color: var(--ms-color-danger);
 }
 
+.ms-badge--outline {
+  border-color: var(--ms-color-border);
+  background: transparent;
+  color: var(--ms-color-foreground);
+}
+
+.ms-badge--ghost,
+.ms-badge--link {
+  background: transparent;
+  color: var(--ms-color-primary);
+}
+
 .ms-card {
   border: 1px solid var(--ms-color-border);
-  border-radius: var(--ms-radius-lg);
+  border-radius: var(--ms-radius-md);
   background: var(--ms-color-surface);
   color: var(--ms-color-foreground);
   box-shadow: var(--ms-shadow-sm);
+  overflow: hidden;
+}
+
+.ms-card--sm .ms-card__header,
+.ms-card--sm .ms-card__content,
+.ms-card--sm .ms-card__footer {
+  padding: 12px;
 }
 
 .ms-card__header,
@@ -204,7 +280,8 @@
 }
 
 .ms-card__header {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 4px;
   padding-bottom: 8px;
 }
@@ -218,6 +295,411 @@
   align-items: center;
   gap: 8px;
   padding-top: 8px;
+}
+
+.ms-card__action {
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+.ms-progress {
+  position: relative;
+  height: 8px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--ms-radius-full);
+  background: color-mix(in srgb, var(--ms-color-primary) 18%, transparent);
+}
+
+.ms-progress__indicator {
+  height: 100%;
+  width: 100%;
+  background: var(--ms-color-primary);
+  transition: transform var(--ms-duration-normal) var(--ms-easing-standard);
+}
+
+.ms-separator {
+  height: 1px;
+  width: 100%;
+  flex-shrink: 0;
+  background: var(--ms-color-border);
+}
+
+.ms-separator--vertical {
+  height: 100%;
+  width: 1px;
+}
+
+.ms-avatar {
+  position: relative;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--ms-radius-full);
+}
+
+.ms-avatar__image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.ms-avatar__fallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ms-radius-full);
+  background: var(--ms-color-muted);
+  color: var(--ms-color-muted-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.ms-tabs__list {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ms-radius-md);
+  background: var(--ms-color-muted);
+  padding: 4px;
+  color: var(--ms-color-muted-foreground);
+}
+
+.ms-tabs__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: var(--ms-radius-sm);
+  padding: 6px 12px;
+  color: inherit;
+  font-family: var(--ms-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  transition:
+    background-color var(--ms-duration-fast) var(--ms-easing-standard),
+    color var(--ms-duration-fast) var(--ms-easing-standard),
+    box-shadow var(--ms-duration-fast) var(--ms-easing-standard);
+}
+
+.ms-tabs__trigger:focus-visible,
+.ms-select__trigger:focus-visible,
+.ms-dropdown__item:focus,
+.ms-dropdown__sub-trigger:focus,
+.ms-dialog__close:focus-visible {
+  outline: 2px solid var(--ms-color-focus);
+  outline-offset: 2px;
+}
+
+.ms-tabs__trigger[data-state="active"] {
+  background: var(--ms-color-surface);
+  color: var(--ms-color-foreground);
+  box-shadow: var(--ms-shadow-sm);
+}
+
+.ms-tabs__trigger:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.ms-tabs__content {
+  margin-top: 8px;
+}
+
+.ms-tooltip__content {
+  z-index: 50;
+  overflow: hidden;
+  border-radius: var(--ms-radius-sm);
+  background: var(--ms-color-foreground);
+  color: var(--ms-color-background);
+  padding: 6px 10px;
+  font-family: var(--ms-font-sans);
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: var(--ms-shadow-md);
+}
+
+.ms-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgb(0 0 0 / 62%);
+}
+
+.ms-dialog__content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 50;
+  display: grid;
+  width: min(100%, 32rem);
+  max-width: calc(100vw - 32px);
+  transform: translate(-50%, -50%);
+  gap: 16px;
+  border: 1px solid var(--ms-color-border);
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-color-surface);
+  color: var(--ms-color-foreground);
+  padding: 24px;
+  box-shadow: var(--ms-shadow-lg);
+}
+
+.ms-dialog__close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--ms-radius-sm);
+  background: transparent;
+  color: var(--ms-color-muted-foreground);
+  cursor: pointer;
+}
+
+.ms-dialog__close:hover {
+  background: var(--ms-color-muted);
+  color: var(--ms-color-foreground);
+}
+
+.ms-dialog__close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-dialog__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.ms-dialog__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.ms-dialog__title {
+  margin: 0;
+  color: var(--ms-color-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 26px;
+}
+
+.ms-dialog__description {
+  margin: 0;
+  color: var(--ms-color-muted-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.ms-dropdown__content,
+.ms-select__content {
+  z-index: 50;
+  max-height: var(--radix-select-content-available-height, var(--radix-dropdown-menu-content-available-height, 320px));
+  min-width: 128px;
+  overflow: auto;
+  border: 1px solid var(--ms-color-border);
+  border-radius: var(--ms-radius-md);
+  background: var(--ms-color-surface-raised);
+  color: var(--ms-color-foreground);
+  padding: 4px;
+  box-shadow: var(--ms-shadow-md);
+}
+
+.ms-dropdown__item,
+.ms-dropdown__sub-trigger,
+.ms-select__item {
+  position: relative;
+  display: flex;
+  min-height: 30px;
+  width: 100%;
+  cursor: default;
+  user-select: none;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--ms-radius-sm);
+  color: var(--ms-color-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+  padding: 5px 8px;
+}
+
+.ms-dropdown__item[data-disabled],
+.ms-select__item[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.ms-dropdown__item:focus,
+.ms-dropdown__sub-trigger:focus,
+.ms-select__item:focus {
+  background: var(--ms-color-muted);
+}
+
+.ms-dropdown__item--inset {
+  padding-left: 32px;
+}
+
+.ms-dropdown__item--checked,
+.ms-select__item {
+  padding-right: 32px;
+}
+
+.ms-dropdown__indicator,
+.ms-select__indicator {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.ms-dropdown__indicator svg,
+.ms-select__indicator svg,
+.ms-dropdown__chevron,
+.ms-select__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-dropdown__chevron {
+  margin-left: auto;
+}
+
+.ms-dropdown__label,
+.ms-select__label {
+  padding: 6px 8px;
+  color: var(--ms-color-muted-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 16px;
+}
+
+.ms-dropdown__separator,
+.ms-select__separator {
+  height: 1px;
+  margin: 4px -4px;
+  background: var(--ms-color-border);
+}
+
+.ms-dropdown__shortcut {
+  margin-left: auto;
+  color: var(--ms-color-muted-foreground);
+  font-size: 12px;
+}
+
+.ms-select__trigger {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--ms-color-border);
+  border-radius: var(--ms-radius-md);
+  background: var(--ms-color-surface);
+  color: var(--ms-color-foreground);
+  padding: 0 11px;
+  font-family: var(--ms-font-sans);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.ms-select__trigger--sm {
+  height: 30px;
+  padding: 0 9px;
+  font-size: 13px;
+}
+
+.ms-select__trigger[data-placeholder] {
+  color: var(--ms-color-muted-foreground);
+}
+
+.ms-select__viewport {
+  min-width: var(--radix-select-trigger-width);
+}
+
+.ms-select__scroll-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.ms-select__scroll-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-scroll-area {
+  position: relative;
+  overflow: hidden;
+}
+
+.ms-scroll-area__viewport {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.ms-scroll-area__bar {
+  display: flex;
+  width: 10px;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+  border-left: 1px solid transparent;
+  padding: 1px;
+}
+
+.ms-scroll-area__bar--horizontal {
+  width: 100%;
+  height: 10px;
+  flex-direction: column;
+  border-left: 0;
+  border-top: 1px solid transparent;
+}
+
+.ms-scroll-area__thumb {
+  position: relative;
+  flex: 1;
+  border-radius: var(--ms-radius-full);
+  background: var(--ms-color-border);
+}
+
+.ms-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .ms-card__title {
@@ -242,4 +724,3 @@
     transform: rotate(360deg);
   }
 }
-

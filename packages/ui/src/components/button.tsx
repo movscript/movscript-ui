@@ -1,15 +1,34 @@
 "use client";
 
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { cn } from "../lib/cn";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
-export type ButtonSize = "sm" | "md" | "lg" | "icon";
+export type ButtonVariant =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "destructive"
+  | "danger"
+  | "link";
+export type ButtonSize =
+  | "default"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "icon"
+  | "icon-xs"
+  | "icon-sm"
+  | "icon-lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
+  asChild?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,31 +39,36 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       loading = false,
       disabled,
+      asChild = false,
       children,
       ...props
     },
     ref
   ) => {
+    const Comp = asChild ? Slot : "button";
+    const normalizedVariant = variant === "primary" ? "default" : variant === "danger" ? "destructive" : variant;
+    const normalizedSize = size === "md" ? "default" : size;
+
     return (
-      <button
+      <Comp
         ref={ref}
         className={cn(
           "ms-button",
-          `ms-button--${variant}`,
-          `ms-button--${size}`,
+          `ms-button--${normalizedVariant}`,
+          `ms-button--${normalizedSize}`,
           loading && "ms-button--loading",
           className
         )}
-        disabled={disabled || loading}
+        disabled={!asChild ? disabled || loading : undefined}
+        aria-disabled={asChild && (disabled || loading) ? true : props["aria-disabled"]}
         data-loading={loading ? "true" : undefined}
         {...props}
       >
         {loading ? <span className="ms-button__spinner" aria-hidden="true" /> : null}
         <span className="ms-button__content">{children}</span>
-      </button>
+      </Comp>
     );
   }
 );
 
 Button.displayName = "Button";
-

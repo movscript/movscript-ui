@@ -3,18 +3,31 @@
 import * as React from "react";
 import { cn } from "../lib/cn";
 
-export type BadgeVariant = "neutral" | "primary" | "success" | "warning" | "danger";
+export type BadgeVariant =
+  | "default"
+  | "neutral"
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "destructive"
+  | "outline"
+  | "ghost"
+  | "link";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
 }
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant = "neutral", ...props }, ref) => {
+  ({ className, variant = "default", ...props }, ref) => {
+    const normalizedVariant = variant === "destructive" ? "danger" : variant;
+
     return (
       <span
         ref={ref}
-        className={cn("ms-badge", `ms-badge--${variant}`, className)}
+        className={cn("ms-badge", `ms-badge--${normalizedVariant}`, className)}
         {...props}
       />
     );
@@ -22,4 +35,3 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 );
 
 Badge.displayName = "Badge";
-
