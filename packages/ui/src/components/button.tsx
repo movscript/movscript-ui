@@ -48,6 +48,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button";
     const normalizedVariant = variant === "primary" ? "default" : variant === "danger" ? "destructive" : variant;
     const normalizedSize = size === "md" ? "default" : size;
+    const content = (
+      <>
+        {loading ? <span className="ms-button__spinner" aria-hidden="true" /> : null}
+        <span className="ms-button__content">{children}</span>
+      </>
+    );
 
     return (
       <Comp
@@ -64,8 +70,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         data-loading={loading ? "true" : undefined}
         {...props}
       >
-        {loading ? <span className="ms-button__spinner" aria-hidden="true" /> : null}
-        <span className="ms-button__content">{children}</span>
+        {asChild ? children : content}
       </Comp>
     );
   }
