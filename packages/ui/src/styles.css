@@ -14,10 +14,19 @@
   white-space: nowrap;
   cursor: pointer;
   transition:
+    transform var(--ms-duration-fast) var(--ms-easing-standard),
     background-color var(--ms-duration-fast) var(--ms-easing-standard),
     border-color var(--ms-duration-fast) var(--ms-easing-standard),
     color var(--ms-duration-fast) var(--ms-easing-standard),
     box-shadow var(--ms-duration-fast) var(--ms-easing-standard);
+}
+
+.ms-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.ms-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .ms-button:focus-visible,
@@ -84,8 +93,9 @@
 
 .ms-button--default,
 .ms-button--primary {
-  background: var(--ms-color-primary);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ms-color-primary) 92%, white 8%), var(--ms-color-primary));
   color: var(--ms-color-primary-foreground);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 16%) inset, 0 10px 22px rgb(19 22 27 / 12%);
 }
 
 .ms-button--default:hover:not(:disabled),
@@ -95,8 +105,8 @@
 
 .ms-button--secondary,
 .ms-button--outline {
-  border-color: var(--ms-color-border);
-  background: var(--ms-color-surface);
+  border-color: color-mix(in srgb, var(--ms-color-border) 88%, var(--ms-color-foreground) 12%);
+  background: color-mix(in srgb, var(--ms-color-surface) 92%, white 8%);
   color: var(--ms-color-foreground);
 }
 
@@ -150,6 +160,12 @@
   border-right-color: transparent;
   border-radius: var(--ms-radius-full);
   animation: ms-spin 700ms linear infinite;
+}
+
+.ms-button svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
 }
 
 .ms-input,
@@ -215,13 +231,14 @@
   display: inline-flex;
   max-width: 100%;
   align-items: center;
+  gap: 4px;
   border: 1px solid transparent;
   border-radius: var(--ms-radius-full);
   font-family: var(--ms-font-sans);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 650;
   line-height: 18px;
-  padding: 1px 8px;
+  padding: 2px 8px;
   white-space: nowrap;
 }
 
@@ -267,9 +284,10 @@
 }
 
 .ms-card {
-  border: 1px solid var(--ms-color-border);
+  border: 1px solid color-mix(in srgb, var(--ms-color-border) 86%, white 14%);
   border-radius: var(--ms-radius-md);
-  background: var(--ms-color-surface);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ms-color-surface) 94%, white 6%), var(--ms-color-surface));
   color: var(--ms-color-foreground);
   box-shadow: var(--ms-shadow-sm);
   overflow: hidden;
@@ -284,18 +302,18 @@
 .ms-card__header,
 .ms-card__content,
 .ms-card__footer {
-  padding: 16px;
+  padding: 18px;
 }
 
 .ms-card__header {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-bottom: 8px;
+  gap: 6px;
+  padding-bottom: 10px;
 }
 
 .ms-card__content {
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .ms-card__footer {
@@ -310,19 +328,37 @@
   align-self: flex-start;
 }
 
+.ms-card__title {
+  margin: 0;
+  color: var(--ms-color-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 16px;
+  font-weight: 680;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+.ms-card__description {
+  margin: 0;
+  color: var(--ms-color-muted-foreground);
+  font-family: var(--ms-font-sans);
+  font-size: 14px;
+  line-height: 22px;
+}
+
 .ms-progress {
   position: relative;
   height: 8px;
   width: 100%;
   overflow: hidden;
   border-radius: var(--ms-radius-full);
-  background: color-mix(in srgb, var(--ms-color-primary) 18%, transparent);
+  background: color-mix(in srgb, var(--ms-color-accent) 16%, var(--ms-color-muted));
 }
 
 .ms-progress__indicator {
   height: 100%;
   width: 100%;
-  background: var(--ms-color-primary);
+  background: linear-gradient(90deg, var(--ms-color-primary), var(--ms-color-accent));
   transition: transform var(--ms-duration-normal) var(--ms-easing-standard);
 }
 
