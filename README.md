@@ -38,6 +38,8 @@ export function Example() {
 }
 ```
 
+Agent chat primitives are documented in [docs/agent-ui.md](docs/agent-ui.md).
+
 ## Development
 
 ```bash
@@ -45,4 +47,3 @@ pnpm install
 pnpm build
 pnpm typecheck
 ```
-
