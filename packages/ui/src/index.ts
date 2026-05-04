@@ -48,6 +48,13 @@ export {
   type AgentStepState,
   type AgentToolCallProps
 } from "./components/agent";
+export {
+  AuthPanel,
+  type AuthPanelMode,
+  type AuthPanelProps,
+  type AuthPanelProvider,
+  type AuthPanelValues
+} from "./components/auth-panel";
 export { Avatar, AvatarFallback, AvatarImage } from "./components/avatar";
 export { Badge, type BadgeProps } from "./components/badge";
 export { Button, type ButtonProps } from "./components/button";
